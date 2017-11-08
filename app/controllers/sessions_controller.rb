@@ -5,13 +5,19 @@ class SessionsController < ApplicationController
     @session = Session.new
   end
 
+  def show
+    @session = Session.find session[:s_id]
+    renser json: @session.user
+  end
+
   def create
     @session = Session.create session_params
+    session[:s_id] = @session.id
     render json: :success
   end
 
   def destroy
-    @session = Session.find session[:session_id]
+    @session = Session.find session[:s_id]
     @session.destroy
     render json: :success
   end
